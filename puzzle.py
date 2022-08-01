@@ -1,4 +1,3 @@
-from Projet_Image import *
 from PySide2 import QtGui, QtCore
 
 
@@ -100,23 +99,8 @@ class Puzzle(QtGui.QImage):
                     self.setPixel(i+self.w_, j, rgb_2)
 
 
-def init_image(path):
-    image = QtGui.QImage(path)
-    w, h = image.size().width(), image.size().height()
-    if w % 3 == 1 :
-        w -= 1
-    if w % 3 == 2 :
-        w += 1
-
-    if h % 3 == 1 :
-        h -= 1
-    if h % 3 == 2 :
-        h += 1
-
-    return Puzzle(image.scaled(w, h))
-
 
 if __name__ == "__main__":
-    A = init_image("test2.jpg")
-    print(A)
+    A = Puzzle("test.jpg")   # WARNING : Height and Width must be divisible by 3
+    print(A)                            # see app.App.setup_image()
     A.save("h.jpg")

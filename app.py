@@ -1,9 +1,8 @@
 from PySide2 import QtWidgets, QtCore, QtGui
-from puzzle import Puzzle, init_image
+from puzzle import Puzzle
 from random import randint
-from pathlib import Path
+import os
 import constants
-
 
 
 class App(QtWidgets.QWidget):
@@ -16,11 +15,25 @@ class App(QtWidgets.QWidget):
         self.setup_timer()
 
     def setup_objects(self):
-        self.qim_image = init_image(constants.IMAGE_FILE)
-        self.qim_image_saved = self.qim_image.copy()  # type: ignore
+        self.setup_image()
         self.buttonMemory = []
         self.time = 0
         self.bestTime = self.load_data()
+
+    def setup_image(self):
+        self.qim_image = QtGui.QImage(constants.IMAGE_FILE)
+        w, h = self.qim_image.size().width(), self.qim_image.size().height()
+        if w % 3 == 1 :
+            w -= 1
+        if w % 3 == 2 :
+            w += 1
+
+        if h % 3 == 1 :
+            h -= 1
+        if h % 3 == 2 :
+            h += 1
+        self.qim_image = Puzzle(self.qim_image.scaled(w, h))
+        self.qim_image_saved = self.qim_image.copy()  # type: ignore
 
     def setup_ui(self):
         self.setWindowTitle("Puzzle game !")
@@ -58,6 +71,16 @@ class App(QtWidgets.QWidget):
         self.btn_7.setCheckable(True)
         self.btn_8.setCheckable(True)
         self.btn_9.setCheckable(True)
+
+        self.btn_1.setMaximumWidth(100)
+        self.btn_2.setMaximumWidth(100)
+        self.btn_3.setMaximumWidth(100)
+        self.btn_4.setMaximumWidth(100)
+        self.btn_5.setMaximumWidth(100)
+        self.btn_6.setMaximumWidth(100)
+        self.btn_7.setMaximumWidth(100)
+        self.btn_8.setMaximumWidth(100)
+        self.btn_9.setMaximumWidth(100)
 
         self.layout_base.addWidget(self.label_image)
         self.layout_linetext.addWidget(self.label_text_1)
@@ -124,7 +147,7 @@ class App(QtWidgets.QWidget):
     def moving_cells(self, cellsNb):
         cellsNb.sort()
         if cellsNb in constants.POSSIBLE_CHOICES:
-            self.qim_image.moving_cells(cellsNb)
+            self.qim_image.moving_cells(cellsNb)  # type: ignore
             return True
         else:
             return False
@@ -155,8 +178,15 @@ class App(QtWidgets.QWidget):
         self.label_text_1.setText(f"Temps : {self.time}s")
 
     def load_data(self):
+        if not os.path.exists(constants.DATA_FILE):
+            self.save_data(1000)
         with open(constants.DATA_FILE, "r") as f:
-            return int(f.read())
+            data = f.read()
+            if data.isdigit():
+                return int(data)
+            else:
+                self.save_data(1000)
+                return 1000
 
     def save_data(self, time):
         with open(constants.DATA_FILE, "w") as f:

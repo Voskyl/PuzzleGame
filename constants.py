@@ -10,5 +10,5 @@ DATA_FILE = os.path.join(DATA_DIR, "bestTime.json")
 
 SIZE_IMAGE = 500
 
-SHUFFLE_NB = 20
+SHUFFLE_NB = 15
 

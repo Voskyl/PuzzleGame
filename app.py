@@ -1,5 +1,5 @@
 from PySide2 import QtWidgets, QtCore, QtGui
-from puzzle import Puzzle
+from puzzle import Puzzle, init_image
 from random import randint
 from pathlib import Path
 import constants
@@ -16,7 +16,7 @@ class App(QtWidgets.QWidget):
         self.setup_timer()
 
     def setup_objects(self):
-        self.qim_image = Puzzle(constants.IMAGE_FILE)
+        self.qim_image = init_image(constants.IMAGE_FILE)
         self.qim_image_saved = self.qim_image.copy()  # type: ignore
         self.buttonMemory = []
         self.time = 0

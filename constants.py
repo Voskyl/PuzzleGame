@@ -5,11 +5,10 @@ REDUNDANCY_CHOICES = [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6], [7, 7], [8
 
 BASE_DIR = os.path.dirname(__file__)
 DATA_DIR = os.path.join(BASE_DIR, "data")
-IMAGE_FILE = os.path.join(DATA_DIR, "Citroen_2CV_3.jpg")
+IMAGE_FILE = os.path.join(DATA_DIR, "image_source.jpg")
 DATA_FILE = os.path.join(DATA_DIR, "bestTime.json")
 
 SIZE_IMAGE = 500
 
 SHUFFLE_NB = 20
-
 

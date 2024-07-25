@@ -3,7 +3,7 @@ from puzzle import Puzzle
 from random import randint
 import os
 import constants
-# hey
+
 
 class App(QtWidgets.QWidget):
     def __init__(self):

@@ -33,23 +33,23 @@ class App(QtWidgets.QWidget):
         if h % 3 == 2 :
             h += 1
         self.qim_image = Puzzle(self.qim_image.scaled(w, h))
-        self.qim_image_saved = self.qim_image.copy()  # type: ignore
+        self.qim_image_saved = self.qim_image.copy()
 
     def setup_ui(self):
         self.setWindowTitle("Puzzle game !")
-        self.layout_base = QtWidgets.QVBoxLayout(self)  # type: ignore
-        self.layout_linetext = QtWidgets.QHBoxLayout()  # type: ignore
-        self.layout_line1 = QtWidgets.QHBoxLayout()  # type: ignore
-        self.layout_line2 = QtWidgets.QHBoxLayout()  # type: ignore
-        self.layout_line3 = QtWidgets.QHBoxLayout()  # type: ignore
+        self.layout_base = QtWidgets.QVBoxLayout(self)
+        self.layout_linetext = QtWidgets.QHBoxLayout()
+        self.layout_line1 = QtWidgets.QHBoxLayout()
+        self.layout_line2 = QtWidgets.QHBoxLayout()
+        self.layout_line3 = QtWidgets.QHBoxLayout()
 
-        self.pxm_image = QtGui.QPixmap(self.qim_image).scaled(constants.SIZE_IMAGE, constants.SIZE_IMAGE, QtCore.Qt.KeepAspectRatio)  # type: ignore
+        self.pxm_image = QtGui.QPixmap(self.qim_image).scaled(constants.SIZE_IMAGE, constants.SIZE_IMAGE, QtCore.Qt.KeepAspectRatio)
         self.label_image = QtWidgets.QLabel("")
         self.label_image.setPixmap(self.pxm_image)
-        self.label_image.setAlignment(QtCore.Qt.AlignCenter)  # type: ignore
+        self.label_image.setAlignment(QtCore.Qt.AlignCenter)
         
         self.label_text_1 = QtWidgets.QLabel("")
-        self.label_text_1.setAlignment(QtCore.Qt.AlignCenter)  # type: ignore
+        self.label_text_1.setAlignment(QtCore.Qt.AlignCenter)
         self.btn_text_2 = QtWidgets.QPushButton(f"Meilleur temps : {self.bestTime}s")
 
         self.btn_1 = QtWidgets.QPushButton("1")
@@ -101,25 +101,27 @@ class App(QtWidgets.QWidget):
         self.layout_base.addLayout(self.layout_line3)
 
     def setup_connections(self):
-        self.btn_text_2.clicked.connect(self.reset_data)  # type: ignore
-        self.btn_1.clicked.connect(self.button_input)  # type: ignore
-        self.btn_2.clicked.connect(self.button_input)  # type: ignore
-        self.btn_3.clicked.connect(self.button_input)  # type: ignore
-        self.btn_4.clicked.connect(self.button_input)  # type: ignore
-        self.btn_5.clicked.connect(self.button_input)  # type: ignore
-        self.btn_6.clicked.connect(self.button_input)  # type: ignore
-        self.btn_7.clicked.connect(self.button_input)  # type: ignore
-        self.btn_8.clicked.connect(self.button_input)  # type: ignore
-        self.btn_9.clicked.connect(self.button_input)  # type: ignore
+        self.btn_text_2.clicked.connect(self.reset_data)
+        self.btn_1.clicked.connect(self.button_input)
+        self.btn_2.clicked.connect(self.button_input)
+        self.btn_3.clicked.connect(self.button_input)
+        self.btn_4.clicked.connect(self.button_input)
+        self.btn_5.clicked.connect(self.button_input)
+        self.btn_6.clicked.connect(self.button_input)
+        self.btn_7.clicked.connect(self.button_input)
+        self.btn_8.clicked.connect(self.button_input)
+        self.btn_9.clicked.connect(self.button_input)
         
     def shuffle(self):
+        """Mix the puzzle cells.
+        """
         for _ in range(constants.SHUFFLE_NB):
             cellsNb = constants.POSSIBLE_CHOICES[randint(0, 11)]
             self.moving_cells(cellsNb)
         self.update_image()
 
     def button_input(self):
-        button_nb = int(self.sender().text())  # type: ignore
+        button_nb = int(self.sender().text())
         self.buttonMemory.append(button_nb)
         self.buttonMemory.sort()
         if len(self.buttonMemory) == 2:
@@ -147,13 +149,13 @@ class App(QtWidgets.QWidget):
     def moving_cells(self, cellsNb):
         cellsNb.sort()
         if cellsNb in constants.POSSIBLE_CHOICES:
-            self.qim_image.moving_cells(cellsNb)  # type: ignore
+            self.qim_image.moving_cells(cellsNb)
             return True
         else:
             return False
     
     def update_image(self):
-        self.pxm_image = QtGui.QPixmap(self.qim_image).scaled(constants.SIZE_IMAGE, constants.SIZE_IMAGE, QtCore.Qt.KeepAspectRatio)  # type: ignore
+        self.pxm_image = QtGui.QPixmap(self.qim_image).scaled(constants.SIZE_IMAGE, constants.SIZE_IMAGE, QtCore.Qt.KeepAspectRatio)
         self.label_image.setPixmap(self.pxm_image)
 
     def victory_test(self):
@@ -165,13 +167,13 @@ class App(QtWidgets.QWidget):
             else:
                 popup.text_update(f"Victoire en {self.time}s !")
             popup.show()
-            self.close()
+            # self.close()
 
     def setup_timer(self):
         self.timer = QtCore.QTimer(self)
-        self.timer.timeout.connect(self.text_update)  # type: ignore
+        self.timer.timeout.connect(self.text_update)
         self.timer.setInterval(1000)
-        self.timer.start()  # type: ignore
+        self.timer.start()
         
     def text_update(self):
         self.time += 1
@@ -207,9 +209,9 @@ class AppPopup(QtWidgets.QWidget):
         self.resize(150, 50)
         
     def setup_ui(self):
-        self.layout_base = QtWidgets.QHBoxLayout(self)  # type: ignore
+        self.layout_base = QtWidgets.QHBoxLayout(self)
         self.label_text = QtWidgets.QLabel("")
-        self.label_text.setAlignment(QtCore.Qt.AlignCenter)  # type: ignore
+        self.label_text.setAlignment(QtCore.Qt.AlignCenter)
 
         self.layout_base.addWidget(self.label_text)
 

@@ -9,20 +9,26 @@ class Puzzle(QtGui.QImage):
         self.grid()
 
     def grid(self):
-        for j in range(0, self.h):  # Barres verticales
+        """Display the grid.
+        """
+        for j in range(0, self.h):  # verticales lines
             for i in range(int(self.w/3)-2, int(self.w/3)+1):
                 self.setPixel(i, j, QtGui.qRgb(255, 255, 255))
 
             for i in range(int(2*self.w/3)-1, int(2*self.w/3)+2):
                 self.setPixel(i, j, QtGui.qRgb(255, 255, 255))
         
-        for i in range(0, self.w):  # Barres horizontales
+        for i in range(0, self.w):  # horizontal lines
             for j in range(int(self.h/3)-2, int(self.h/3)+1):
                 self.setPixel(i, j, QtGui.qRgb(255, 255, 255))
             for j in range(int(2*self.h/3)-1, int(2*self.h/3)+2):
                 self.setPixel(i, j, QtGui.qRgb(255, 255, 255))
 
     def moving_cells(self, cellNb):
+        """Move two cells according to cellNb.
+        Args:
+            cellNb (list[int]): Cells to be swaped - [cell 1, cell 2].
+        """
         for i in range(int(self.w/3)+1, int(2*self.w/3)-1):
             for j in range(int(self.h/3)+1, int(2*self.h/3)-1):
 
